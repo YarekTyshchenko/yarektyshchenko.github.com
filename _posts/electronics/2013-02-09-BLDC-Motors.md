@@ -1,6 +1,8 @@
 ---
+layout: post
+category: electronics
 title: Driving BLDC Motors
-tags: [electronics, BLDC]
+tags: [BLDC, PIC, AVR]
 ---
 
 Driving sensor-less BLDC motors
