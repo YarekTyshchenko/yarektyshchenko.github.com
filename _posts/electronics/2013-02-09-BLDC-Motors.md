@@ -1,12 +1,10 @@
 ---
 layout: post
 category: electronics
-title: Driving BLDC Motors
+title: Driving sensor-less BLDC motors
+tagline: Learning experiences
 tags: [BLDC, PIC, AVR]
 ---
-
-Driving sensor-less BLDC motors
-===============================
 
 Finding a cheap and versatile solution is harder than it seems. The problem stems from using a motor without sensor, as back-EMF signal is very unpredictable and difficult or even impossible to measure with standard ADC, without comparators.
 
