@@ -1,0 +1,16 @@
+<pre>
+{{ page.title }} {% if page.tagline %} // {{ page.tagline }} {% endif %}
+
+    {{ content }}
+
+    {% include JB/comments %}
+
+Published:
+{{ page.date | date_to_long_string }}
+
+  {% unless page.tags == empty %}
+Tags:
+    {% assign tags_list = page.tags %}
+    {% include JB/tags_list %}
+  {% endunless %}
+</pre>
