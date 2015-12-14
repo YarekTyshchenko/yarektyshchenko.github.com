@@ -102,7 +102,7 @@ public class SpeedCalculator {
 ~~~
 
 How to use:
-~~~ c#
+{% highlight c# %}
 SpeedCalculator sc = new SpeedCalculator((IMyTerminalBlock)Me);
 SpeedCalculator.Store store = SpeedCalculator.Store.fromString(Storage);
 sc.calculate(ref store);
@@ -112,6 +112,6 @@ Storage = store.ToString();
 double speed = sc.getSpeed();
 // Seconds passed since last calculation
 double delta = sc.getDeltaSeconds();
-~~~
+{% endhighlight %}
 
 I'm still working on the store implementation, but this first iteration should allow you to use whatever persistance method you want.
