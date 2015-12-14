@@ -156,3 +156,56 @@ lcd.writeLine("Seconds Delta: "+2);
 {% endhighlight %}
 
 An object is created for each Panel. The interface is "fluid" so you can chain functions together `lcd.clear().writeLine("foo");` or `lcd.writeLine("foo").writeLine("bar");`, so you don't have to add newlines manually
+
+### Cruise Control
+{% highlight c# %}
+public class CruiseControl {
+    private double targetSpeed = 0.0;
+    private List<IMyThrust> thrusters = new List<IMyThrust>();
+
+    public void setTarget(double targetSpeed) {
+        this.targetSpeed = targetSpeed;
+    }
+    public void addThruster(IMyThrust thruster) {
+        this.thrusters.Add(thruster);
+    }
+    public void recompute(double currentSpeed) {
+        // recompute the thruster override settings based on the current speed
+        this.simpleImplementation(currentSpeed);
+    }
+
+    private void simpleImplementation(double currentSpeed) {
+        for(var i = 0; i < this.thrusters.Count; i++) {
+            IMyTerminalBlock t = this.thrusters[i];
+            // If going too fast
+            if (currentSpeed > targetSpeed) {
+                // Turn all thrusters off
+                t.GetActionWithName("OnOff_Off").Apply(t);
+            } else {
+                // Turn all thrusters on
+                t.GetActionWithName("OnOff_On").Apply(t);
+            }
+        }
+    }
+}
+{% endhighlight %}
+
+How to use it:
+{% highlight c# %}
+// Create an instance
+CruiseControl cc = new CruiseControl(); 
+// Set its target speed
+cc.setTarget(23.5);
+
+// Find all the thrusters that point in the direction of where you are going
+IMyThrust t = GridTerminalSystem.GetBlockWithName("CC (Forward)") as IMyThrust;
+
+// Add them to the cruise control system
+cc.addThruster(t);
+
+// Recompute on every update
+cc.recompute(sc.getSpeed());
+{% endhighlight %}
+
+The thruster passed in need to be already overridden for this to work.
+The naive implementation will just toggle the overridden thruster on and off dependent on the speed passed in.
