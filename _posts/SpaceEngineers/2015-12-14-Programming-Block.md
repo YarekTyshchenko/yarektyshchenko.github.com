@@ -119,3 +119,40 @@ double delta = sc.getDeltaSeconds();
 
 I'm still working on the store implementation, but this first iteration should allow you to use whatever persistance method you want.
 
+### LCD Panel
+{% highlight c# %}
+class LCD {
+    IMyTextPanel lcd;
+    
+    // Grid terminal system is needed here so the search happens in the right grid
+    public LCD(IMyGridTerminalSystem gts, string panelName) {
+        this.lcd = gts.GetBlockWithName(panelName) as IMyTextPanel;
+        this.lcd.ShowTextureOnScreen();
+        this.lcd.ShowPublicTextOnScreen();
+    }
+
+    public LCD writeText(string text) {
+        this.lcd.WritePublicText(text, true);
+        return this;
+    }
+
+    public LCD writeLine(string line) {
+        this.writeText(line+"\n");
+        return this;
+    }
+
+    public LCD clear() {
+        this.lcd.WritePublicText("", false);
+        return this;
+    }
+}
+{% endhighlight %}
+
+How to use:
+{% highlight c# %}
+LCD lcd = new LCD(GridTerminalSystem, "LCD").clear();
+lcd.writeLine("Speed: "+10);
+lcd.writeLine("Seconds Delta: "+2);
+{% endhighlight %}
+
+An object is created for each Panel. The interface is "fluid" so you can chain functions together `lcd.clear().writeLine("foo");` or `lcd.writeLine("foo").writeLine("bar");`, so you don't have to add newlines manually
