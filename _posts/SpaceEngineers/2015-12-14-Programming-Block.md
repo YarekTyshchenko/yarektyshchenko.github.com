@@ -1,6 +1,7 @@
 ---
 published: true
-layout: post
+layout: "post,"
+comments: true
 ---
 
 
@@ -15,6 +16,7 @@ For now I'm going to dump a few bits of code that i'm working on here
 ### Speed calculator
 
 {% highlight c# %}
+```
 public class SpeedCalculator {
     public struct Store {
         // Previous Time
@@ -99,9 +101,11 @@ public class SpeedCalculator {
         store.position = currentVector;
     }
 }
+```
 {% endhighlight %}
 
 How to use:
+```
 {% highlight c# %}
 SpeedCalculator sc = new SpeedCalculator((IMyTerminalBlock)Me);
 SpeedCalculator.Store store = SpeedCalculator.Store.fromString(Storage);
@@ -113,5 +117,6 @@ double speed = sc.getSpeed();
 // Seconds passed since last calculation
 double delta = sc.getDeltaSeconds();
 {% endhighlight %}
-
+```
 I'm still working on the store implementation, but this first iteration should allow you to use whatever persistance method you want.
+
