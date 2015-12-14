@@ -14,7 +14,7 @@ For now I'm going to dump a few bits of code that i'm working on here
 
 ### Speed calculator
 
-~~~ c#
+{% highlight c# %}
 public class SpeedCalculator {
     public struct Store {
         // Previous Time
@@ -99,7 +99,7 @@ public class SpeedCalculator {
         store.position = currentVector;
     }
 }
-~~~
+{% endhighlight %}
 
 How to use:
 {% highlight c# %}
