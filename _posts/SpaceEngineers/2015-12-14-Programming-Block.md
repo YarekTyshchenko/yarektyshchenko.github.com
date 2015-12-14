@@ -1,6 +1,6 @@
 ---
 published: true
-layout: "post,"
+layout: post
 comments: true
 ---
 
