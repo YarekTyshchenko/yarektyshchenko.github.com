@@ -4,6 +4,7 @@ layout: post
 ---
 
 
+
 ## Space Engineering - Programming block
 
 Since KeenSH released the Programming block its now possible to build pretty good automations for your ships
@@ -13,7 +14,7 @@ For now I'm going to dump a few bits of code that i'm working on here
 
 ### Speed calculator
 
-```c#
+~~~ c#
 public class SpeedCalculator {
     public struct Store {
         // Previous Time
@@ -98,10 +99,10 @@ public class SpeedCalculator {
         store.position = currentVector;
     }
 }
-```
+~~~
 
 How to use:
-```c#
+~~~ c#
 SpeedCalculator sc = new SpeedCalculator((IMyTerminalBlock)Me);
 SpeedCalculator.Store store = SpeedCalculator.Store.fromString(Storage);
 sc.calculate(ref store);
@@ -111,6 +112,6 @@ Storage = store.ToString();
 double speed = sc.getSpeed();
 // Seconds passed since last calculation
 double delta = sc.getDeltaSeconds();
-```
+~~~
 
 I'm still working on the store implementation, but this first iteration should allow you to use whatever persistance method you want.
