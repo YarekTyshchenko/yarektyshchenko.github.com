@@ -176,7 +176,7 @@ public class CruiseControl {
 
     private void simpleImplementation(double currentSpeed) {
         for(var i = 0; i < this.thrusters.Count; i++) {
-            IMyTerminalBlock t = this.thrusters[i];
+            IMyTerminalBlock t = (IMyTerminalBlock)this.thrusters[i];
             // If going too fast
             if (currentSpeed > targetSpeed) {
                 // Turn all thrusters off
