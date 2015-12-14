@@ -1,6 +1,8 @@
 ---
 published: true
+layout: post
 ---
+
 
 ## Space Engineering - Programming block
 
