@@ -150,7 +150,7 @@ class LCD {
 
 How to use:
 {% highlight c# %}
-LCD lcd = new LCD(GridTerminalSystem, "LCD").clear();
+LCD lcd = new LCD(GridTerminalSystem, "LCD Panel").clear();
 lcd.writeLine("Speed: "+10);
 lcd.writeLine("Seconds Delta: "+2);
 {% endhighlight %}
