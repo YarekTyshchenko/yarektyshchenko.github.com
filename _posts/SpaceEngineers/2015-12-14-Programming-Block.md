@@ -106,7 +106,13 @@ public class SpeedCalculator {
 How to use:
 
 {% highlight c# %}
+// Instantiate a speed calculator using the programming block for measurments
+// You can use any block, something near the center of the ship so the rotation
+// doesn't contribute to the overall speed.
 SpeedCalculator sc = new SpeedCalculator((IMyTerminalBlock)Me);
+
+// Storage malarky: Required because we need to store previous 3D Vector and time
+// to calculate distance traveled and speed
 SpeedCalculator.Store store = SpeedCalculator.Store.fromString(Storage);
 sc.calculate(ref store);
 Storage = store.ToString();
@@ -117,7 +123,7 @@ double speed = sc.getSpeed();
 double delta = sc.getDeltaSeconds();
 {% endhighlight %}
 
-I'm still working on the store implementation, but this first iteration should allow you to use whatever persistance method you want.
+I'm still working on the store implementation, but this first iteration should flexible about the persistence method. The ser-de logic is hidden in the struct.
 
 ### LCD Panel
 {% highlight c# %}
@@ -150,12 +156,13 @@ class LCD {
 
 How to use:
 {% highlight c# %}
+// Second parameter is the name of the panel to search for
 LCD lcd = new LCD(GridTerminalSystem, "LCD Panel").clear();
 lcd.writeLine("Speed: "+10);
 lcd.writeLine("Seconds Delta: "+2);
 {% endhighlight %}
 
-An object is created for each Panel. The interface is "fluid" so you can chain functions together `lcd.clear().writeLine("foo");` or `lcd.writeLine("foo").writeLine("bar");`, so you don't have to add newlines manually
+An object should be created for each Panel. The interface is "fluid" so you can chain functions together `lcd.clear().writeLine("foo");` or `lcd.writeLine("foo").writeLine("bar");`, so you don't have to add newlines manually
 
 ### Cruise Control
 {% highlight c# %}
@@ -242,7 +249,7 @@ public class Computer {
 }
 {% endhighlight %}
 
-And to use include it before the main method:
+And to use create it before the main method:
 {% highlight c# %}
 Computer computer = new Computer();
 SpeedCalculator sc;
