@@ -198,7 +198,7 @@ CruiseControl cc = new CruiseControl();
 cc.setTarget(23.5);
 
 // Find all the thrusters that point in the direction of where you are going
-IMyThrust t = GridTerminalSystem.GetBlockWithName("CC (Forward)") as IMyThrust;
+IMyThrust t = GridTerminalSystem.GetBlockWithName("CC (Forward) ") as IMyThrust;
 
 // Add them to the cruise control system
 cc.addThruster(t);
@@ -209,3 +209,58 @@ cc.recompute(sc.getSpeed());
 
 The thruster passed in need to be already overridden for this to work.
 The naive implementation will just toggle the overridden thruster on and off dependent on the speed passed in.
+
+### Computer loop
+{% highlight c# %}
+public class Computer {
+    private bool runOnce = false;
+
+    // Returns false once
+    public bool init() {
+        bool val = this.runOnce;
+        this.runOnce = true;
+        return val;
+    }
+
+    private IMyTimerBlock timerBlock;
+
+    public void setTimer(IMyTimerBlock timerBlock) {
+        this.timerBlock = timerBlock;
+    }
+
+    public void triggerNow() {
+        this.timerBlock.GetActionWithName("TriggerNow").Apply(this.timerBlock);
+    }
+
+    public void loop() {
+
+    }
+}
+{% endhighlight %}
+
+And to use include it before the main method:
+{% highlight c# %}
+Computer computer = new Computer();
+SpeedCalculator sc;
+LCD lcd;
+void Main(string arg)  
+{
+    if (! computer.init()) {
+        IMyTimerBlock timerBlock = GridTerminalSystem.GetBlockWithName("Timer Block") as IMyTimerBlock;
+        computer.setTimer(timerBlock);
+
+        sc = new SpeedCalculator((IMyTerminalBlock)Me);
+        lcd = new LCD(GridTerminalSystem, "LCD");
+    }
+
+    //computer.loop();
+
+    SpeedCalculator.Store store = SpeedCalculator.Store.fromString(Storage); 
+    sc.calculate(ref store); 
+    Storage = store.ToString(); 
+ 
+    lcd.clear();
+    lcd.writeLine("Speed: "+Math.Round(sc.getSpeed(), 3)); 
+    lcd.writeLine("Seconds Delta: "+Math.Round(sc.getDeltaSeconds(), 3)); 
+}
+{% endhighlight %}
