@@ -8,7 +8,7 @@ comments: true
 
 ## Space Engineering - Programming block
 
-Since KeenSH released the Programming block its now possible to build pretty good automations for your ships
+Since KeenSWH released the Programming block its now possible to build pretty good automations for your ships
 and go as far as building fully automated ships. However, I notice that there is a distinct lack of interface design in the exposed API.
 
 For now I'm going to dump a few bits of code that i'm working on here
