@@ -211,6 +211,8 @@ The thruster passed in need to be already overridden for this to work.
 The naive implementation will just toggle the overridden thruster on and off dependent on the speed passed in.
 
 ### Computer loop
+Its horrible that method dispatch isn't really possible with the restrictions in the programming block. Can't use reflection class.
+It would be nice to somehow subclass the `Computer` put your own implementation there, possibly having a behaviour structure.
 {% highlight c# %}
 public class Computer {
     private bool runOnce = false;
