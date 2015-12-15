@@ -213,6 +213,8 @@ The naive implementation will just toggle the overridden thruster on and off dep
 ### Computer loop
 Its horrible that method dispatch isn't really possible with the restrictions in the programming block. Can't use reflection class.
 It would be nice to somehow subclass the `Computer` put your own implementation there, possibly having a behaviour structure.
+
+This code here is very experimental, and doesn't really give any advantage to just putting code straight into the main method. The goal of this is to both separate init stage from runtime and to offer a mechanism for timer speed management. Another neccessity is to provide a state machine responding to stimuli from outside. None of this is possible really without wrappers for the loop and the storage mechanisms.
 {% highlight c# %}
 public class Computer {
     private bool runOnce = false;
