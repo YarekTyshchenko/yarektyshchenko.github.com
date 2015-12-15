@@ -6,6 +6,7 @@ comments: true
 
 
 
+
 ## Space Engineering - Programming block
 
 Since KeenSWH released the Programming block its now possible to build pretty good automations for your ships
@@ -14,7 +15,7 @@ and go as far as building fully automated ships. However, I notice that there is
 For now I'm going to dump a few bits of code that i'm working on here
 
 ### Speed calculator
-
+Shamelessly adapted from a [Gist](https://gist.github.com/awstanley/eb72ef4aa8683b7f0cf3) by [A.W. Stanley](https://gist.github.com/awstanley)
 {% highlight c# %}
 public class SpeedCalculator {
     public struct Store {
