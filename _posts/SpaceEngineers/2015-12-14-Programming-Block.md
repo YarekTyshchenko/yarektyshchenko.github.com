@@ -368,7 +368,7 @@ void Main(string arg) {
     nav.addGyro(Navigator.Direction.Up, GridTerminalSystem.GetBlockWithName("Gyroscope Up") as IMyGyro);
     nav.addGyro(Navigator.Direction.Down, GridTerminalSystem.GetBlockWithName("Gyroscope Down") as IMyGyro);
 
-	if (arg == "left") {
+    if (arg == "left") {
         m = nav.Turn(5, Navigator.Direction.Left);
     }
     
