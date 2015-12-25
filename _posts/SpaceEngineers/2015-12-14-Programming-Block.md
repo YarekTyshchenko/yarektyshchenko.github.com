@@ -19,7 +19,7 @@ For now I'm going to dump a few bits of code that i'm working on here
 
 ### Speed calculator
 Shamelessly adapted from a [Gist](https://gist.github.com/awstanley/eb72ef4aa8683b7f0cf3) by [A.W. Stanley](https://gist.github.com/awstanley)
-{% gist YarekTyshchenko/8d5760966fc1b5d56c20 file-cruisecontrol-cs %}
+{% YarekTyshchenko/8d5760966fc1b5d56c20 CruiseControl.cs %}
 
 How to use:
 
