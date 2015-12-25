@@ -10,6 +10,7 @@ comments: true
 
 
 
+
 ## Space Engineering - Programming block
 
 Since KeenSWH released the Programming block its now possible to build pretty good automations for your ships
@@ -19,102 +20,27 @@ For now I'm going to dump a few bits of code that i'm working on here
 
 ### Speed calculator
 Shamelessly adapted from a [Gist](https://gist.github.com/awstanley/eb72ef4aa8683b7f0cf3) by [A.W. Stanley](https://gist.github.com/awstanley)
-{% gist yarektyshchenko/8d5760966fc1b5d56c20 CruiseControl.cs %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 SpeedCalculator.cs %}
 
 How to use:
 
-{% gist yarektyshchenko/8d5760966fc1b5d56c20 CruiseControl_usage.cs %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 SpeedCalculator_usage.cs %}
 
 I'm still working on the store implementation, but this first iteration should flexible about the persistence method. The ser-de logic is hidden in the struct.
 
 ### LCD Panel
-{% highlight c# %}
-class LCD {
-    IMyTextPanel lcd;
-    
-    // Grid terminal system is needed here so the search happens in the right grid
-    public LCD(IMyGridTerminalSystem gts, string panelName) {
-        this.lcd = gts.GetBlockWithName(panelName) as IMyTextPanel;
-        this.lcd.ShowTextureOnScreen();
-        this.lcd.ShowPublicTextOnScreen();
-    }
-
-    public LCD writeText(string text) {
-        this.lcd.WritePublicText(text, true);
-        return this;
-    }
-
-    public LCD writeLine(string line) {
-        this.writeText(line+"\n");
-        return this;
-    }
-
-    public LCD clear() {
-        this.lcd.WritePublicText("", false);
-        return this;
-    }
-}
-{% endhighlight %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 LCD.cs %}
 
 How to use:
-{% highlight c# %}
-// Second parameter is the name of the panel to search for
-LCD lcd = new LCD(GridTerminalSystem, "LCD Panel").clear();
-lcd.writeLine("Speed: "+10);
-lcd.writeLine("Seconds Delta: "+2);
-{% endhighlight %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 LCD_usage.cs %}
 
 An object should be created for each Panel. The interface is "fluid" so you can chain functions together `lcd.clear().writeLine("foo");` or `lcd.writeLine("foo").writeLine("bar");`, so you don't have to add newlines manually
 
 ### Cruise Control
-{% highlight c# %}
-public class CruiseControl {
-    private double targetSpeed = 0.0;
-    private List<IMyThrust> thrusters = new List<IMyThrust>();
-
-    public void setTarget(double targetSpeed) {
-        this.targetSpeed = targetSpeed;
-    }
-    public void addThruster(IMyThrust thruster) {
-        this.thrusters.Add(thruster);
-    }
-    public void recompute(double currentSpeed) {
-        // recompute the thruster override settings based on the current speed
-        this.simpleImplementation(currentSpeed);
-    }
-
-    private void simpleImplementation(double currentSpeed) {
-        for(var i = 0; i < this.thrusters.Count; i++) {
-            IMyTerminalBlock t = (IMyTerminalBlock)this.thrusters[i];
-            // If going too fast
-            if (currentSpeed > targetSpeed) {
-                // Turn all thrusters off
-                t.GetActionWithName("OnOff_Off").Apply(t);
-            } else {
-                // Turn all thrusters on
-                t.GetActionWithName("OnOff_On").Apply(t);
-            }
-        }
-    }
-}
-{% endhighlight %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 CruiseControl.cs %}
 
 How to use it:
-{% highlight c# %}
-// Create an instance
-CruiseControl cc = new CruiseControl(); 
-// Set its target speed
-cc.setTarget(23.5);
-
-// Find all the thrusters that point in the direction of where you are going
-IMyThrust t = GridTerminalSystem.GetBlockWithName("CC (Forward) ") as IMyThrust;
-
-// Add them to the cruise control system
-cc.addThruster(t);
-
-// Recompute on every update
-cc.recompute(sc.getSpeed());
-{% endhighlight %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 CruiseControl_usage.cs %}
 
 The thruster passed in need to be already overridden for this to work.
 The naive implementation will just toggle the overridden thruster on and off dependent on the speed passed in.
@@ -133,6 +59,7 @@ void Main(string arg) {
 {% endhighlight %}
 
 This code here is very experimental, and doesn't really give any advantage to just putting code straight into the main method. The goal of this is to both separate init stage from runtime and to offer a mechanism for timer speed management. Another neccessity is to provide a state machine responding to stimuli from outside. None of this is possible really without wrappers for the loop and the storage mechanisms.
+
 {% highlight c# %}
 public class Computer {
     private bool runOnce = false;
