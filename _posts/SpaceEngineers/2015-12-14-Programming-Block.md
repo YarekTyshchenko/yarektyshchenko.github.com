@@ -19,28 +19,11 @@ For now I'm going to dump a few bits of code that i'm working on here
 
 ### Speed calculator
 Shamelessly adapted from a [Gist](https://gist.github.com/awstanley/eb72ef4aa8683b7f0cf3) by [A.W. Stanley](https://gist.github.com/awstanley)
-{% gist yarektyshchenko/2a00beed20996aea5fd4 %}
 {% gist yarektyshchenko/8d5760966fc1b5d56c20 CruiseControl.cs %}
 
 How to use:
 
-{% highlight c# %}
-// Instantiate a speed calculator using the programming block for measurments
-// You can use any block, something near the center of the ship so the rotation
-// doesn't contribute to the overall speed.
-SpeedCalculator sc = new SpeedCalculator((IMyTerminalBlock)Me);
-
-// Storage malarky: Required because we need to store previous 3D Vector and time
-// to calculate distance traveled and speed
-SpeedCalculator.Store store = SpeedCalculator.Store.fromString(Storage);
-sc.calculate(ref store);
-Storage = store.ToString();
-
-// Speed in Meters Per Second
-double speed = sc.getSpeed();
-// Seconds passed since last calculation
-double delta = sc.getDeltaSeconds();
-{% endhighlight %}
+{% gist yarektyshchenko/8d5760966fc1b5d56c20 CruiseControl_usage.cs %}
 
 I'm still working on the store implementation, but this first iteration should flexible about the persistence method. The ser-de logic is hidden in the struct.
 
