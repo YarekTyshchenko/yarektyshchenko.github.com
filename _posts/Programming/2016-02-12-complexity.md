@@ -25,3 +25,5 @@ Total number of artifacts: How many of instances there are in total. Perhaps you
 Looking at a bounded context holistically: A system that has many moving pieces, but all the pieces do only one thing and have limited number of failure modes each would in my opinion be simpler than a system made up of a few complicated "Master" services.
   
 Conversely, a monolith that does only one thing, that unfortunately has to integrate with some awful API gateway that could fail in many unpredictable ways would be considered simple. All its failure modes should be easily testable and accounted for in a big list.
+
+Sorry for the formatting here, Jekyll is being stupid.
